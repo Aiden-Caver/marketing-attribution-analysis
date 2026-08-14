@@ -23,4 +23,3 @@ def clean_purchases(purch_clean):
     purch_clean['purchase_date'] = pd.to_datetime(purch_clean['purchase_date'], format = 'mixed', errors='coerce') # convert purchase_date to datetime, coerce errors to NaT
     purch_clean['customer_id'] = purch_clean['customer_id'].str.strip() # remove extra spaces from customer_id
     return purch_clean
-
