@@ -19,6 +19,16 @@ camp_clean = clean_campaigns(camp_clean)
 sign_clean = clean_signups(sign_clean)
 purch_clean = clean_purchases(purch_clean)
 
-print(f"Campaigns: {campaigns.shape[0]} -> {camp_clean.shape[0]} rows")
-print(f"Signups: {signups.shape[0]} -> {sign_clean.shape[0]} rows")
-print(f"Purchases: {purchases.shape[0]} -> {purch_clean.shape[0]} rows")
+print(f"Campaigns: {campaigns.shape} -> {camp_clean.shape} cleaned")
+print(f"Signups: {signups.shape} -> {sign_clean.shape} cleaned")
+print(f"Purchases: {purchases.shape} -> {purch_clean.shape} cleaned")
+
+# Merge the cleaned dataframes
+def merge_campaign_data (camp_clean, sign_clean, purch_clean):
+    '''Function to merge cleaned campaigns with signups using left join, then merge purchases also with left join.'''
+    merged_df1 = pd.merge(camp_clean, sign_clean, on='campaign_id', how='left') # Merge campaigns and signups on campaign_id with left join
+    print(f"Merged DataFrame shape after merging campaigns and signups: {merged_df1.shape}")
+    merged_df = pd.merge(merged_df1, purch_clean, on='customer_id', how='left') # Merge the result with purchases on customer_id with left join
+    return merged_df
+
+print(f"Merged DataFrame shape: {merge_campaign_data(camp_clean, sign_clean, purch_clean).shape}")
